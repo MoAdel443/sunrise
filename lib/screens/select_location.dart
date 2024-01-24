@@ -1,6 +1,11 @@
+import 'dart:developer';
+
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:sunrise/components/splash_widget.dart';
+import 'package:sunrise/models/weather_model.dart';
 import 'package:sunrise/screens/home_screen.dart';
+import 'package:sunrise/services/weather_services.dart';
 
 class SelectLocation extends StatelessWidget {
   SelectLocation({super.key});
@@ -29,6 +34,12 @@ class SelectLocation extends StatelessWidget {
                   ),
                 ),
                 child: TextField(
+                  // onSubmitted: (value) async {
+                  //   WeatherModel weatherModel = await WeatherServices(Dio())
+                  //       .getWeatherData(cityName: value);
+                  //
+                  //   log(weatherModel.todayWeatherModel.stateForThisHour);
+                  // },
                   controller: _locationController,
                   keyboardType: TextInputType.text,
                   maxLines: 1,
@@ -59,9 +70,20 @@ class SelectLocation extends StatelessWidget {
                       fontWeight: FontWeight.w600,
                     ),
                   ),
-                  onPressed: (){
-                    //todo navigate to home screen
-                    Navigator.of(context).pushReplacementNamed( HomeScreen().screenRoute);
+                  onPressed: () async {
+                    WeatherModel weatherModel = await WeatherServices(Dio())
+                        .getWeatherData(cityName: _locationController.text);
+
+                    log(weatherModel.city);
+                    Navigator.of(context).pushReplacement(
+                      MaterialPageRoute(
+                        builder: (context) {
+                          return HomeScreen(
+                            weatherModel: weatherModel,
+                          );
+                        },
+                      ),
+                    );
                   },
                 ),
               )

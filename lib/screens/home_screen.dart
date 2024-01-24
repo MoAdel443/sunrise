@@ -1,16 +1,16 @@
-import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:sunrise/components/next_forecast.dart';
 import 'package:sunrise/components/today_forecast.dart';
 import 'package:sunrise/models/weather_model.dart';
 
-import '../services/weather_services.dart';
 
 class HomeScreen extends StatefulWidget {
-   HomeScreen({super.key});
+  HomeScreen({super.key, required this.weatherModel});
 
   final String screenRoute = "HomeScreen";
+
+  WeatherModel weatherModel;
 
 
 
@@ -58,20 +58,20 @@ class _HomeScreenState extends State<HomeScreen> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                const Row(
+                 Row(
                   children: [
-                    Icon(
+                   const  Icon(
                       Icons.location_on_outlined,
                       color: Colors.white,
                       size: 35.0,
                     ),
-                    SizedBox(
+                    const SizedBox(
                       width: 7.0,
                     ),
                     Text(
                       //todo put here city name from previous screen
-                      "Giza",
-                      style: TextStyle(
+                      widget.weatherModel.city,
+                      style: const TextStyle(
                         color: Colors.white,
                         fontSize: 25.0,
                         fontWeight: FontWeight.w700,
@@ -83,9 +83,9 @@ class _HomeScreenState extends State<HomeScreen> {
                   "assets/images/Logo.png",
                   height: 200.0,
                 ),
-                const Text(
+                 Text(
                   // todo put here degree
-                  "  28º",
+                  "${widget.weatherModel.temp.toInt().toString()}º",
                   style: TextStyle(
                       fontSize: 54.0,
                       fontWeight: FontWeight.bold,
