@@ -5,6 +5,7 @@ import 'package:sunrise/screens/select_location.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});
+
   final String screenRoute = "Splashscreen";
 
 
@@ -15,9 +16,10 @@ class SplashScreen extends StatefulWidget {
 class _SplashScreenState extends State<SplashScreen> {
 
 
-  _startDelay(){
+  _startDelay() {
     Timer(const Duration(seconds: 3), _goNext);
   }
+
   _goNext() {
     Navigator.of(context).pushReplacement(
       MaterialPageRoute(builder: (c) {
@@ -31,10 +33,11 @@ class _SplashScreenState extends State<SplashScreen> {
     _startDelay();
     super.initState();
   }
+
   @override
   Widget build(BuildContext context) {
     return const Scaffold(
-      body:  SplashWidget(),
+      body: SplashWidget(),
     );
   }
 }
